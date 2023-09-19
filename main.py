@@ -4,9 +4,7 @@ from fastapi import FastAPI, Response
 import uvicorn
 
 from resources.students import StudentsResource
-
 app = FastAPI()
-
 students_resource = StudentsResource()
 
 
@@ -17,12 +15,15 @@ async def root():
 
 @app.get("/hello/{name}")
 async def say_hello(name: str):
-    return {"message": f"Awesome cloud developer mr4331 says hello {name}"}
+    return {
+            "message": f"hello {name}",
+            "Sender": "May Ramati"
+            }
 
 
 @app.get("/hello_text/{name}")
 async def say_hello_text(name: str):
-    the_message = f"Awesome cloud developer mr4331 says Hello {name}"
+    the_message = f"Hello {name}"
     rsp = Response(content=the_message, media_type="text/plain")
     return rsp
 
@@ -34,4 +35,4 @@ async def get_students():
 
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8013)
+    uvicorn.run(app, host="0.0.0.0", port=8011)

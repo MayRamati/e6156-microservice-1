@@ -10,7 +10,7 @@ students_resource = StudentsResource()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Hello World!"}
 
 
 @app.get("/hello/{name}")

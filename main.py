@@ -1,12 +1,10 @@
 from fastapi import FastAPI, Response
-
-# I like to launch directly and not use the standard FastAPI startup
+from typing import List
 import uvicorn
+from resources.students import StudentsResource, StudentModel
 
-from resources.students import StudentsResource
 app = FastAPI()
-students_resource = StudentsResource()
-
+students_resource = StudentsResource("./resources/students.json")
 
 @app.get("/")
 async def root():
@@ -28,11 +26,15 @@ async def say_hello_text(name: str):
     return rsp
 
 
-@app.get("/students")
-async def get_students():
-    result = students_resource.get_students()
+@app.get("/students", response_model=List[StudentModel])
+async def get_students(last_name: str = None):
+    result = students_resource.get_students(last_name)
     return result
 
+@app.post("/students")
+async def get_students(s: StudentModel):
+    result = students_resource.create_students(s)
+    return None
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8011)
